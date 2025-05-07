@@ -21,18 +21,19 @@ jobs:
               with:
                 java-version: '11'
                 distribution: 'temurin'
-                
-            # Verify that the project builds correctly and run tests
+
+            # Run tests
+            # ALTERNATIVE VERSION --> Verify that the project builds correctly and run tests
             - name: Build with Maven
               working-directory: back
               run: mvn clean test
-              # run: mvn -B package --file pom.xml
+              # ALTERNATIVE VERSION --> run: mvn -B package --file pom.xml
 
             # Generate Jacoco test report
             - name: Generate Jacoco coverage report
               working-directory: back
               run: mvn jacoco:report
-              # run: mvn -B verify
+              # ALTERNATIVE VERSION --> run: mvn -B verify
               
             # Upload the coverage report
             - name: Upload Jacoco coverage report
