@@ -29,12 +29,12 @@ jobs:
             # Build project
             - name: Install dependencies
               working-directory: front
-              run: ng build #ou npm ci ??
+              run: npm ci
 
             # Run tests
             - name: Run tests
               working-directory: front
-              run: ng test #ou npm run test:prod ?? 
+              run: npm run test:prod
 
             # Upload front-end tests results
             - name: Upload test results
