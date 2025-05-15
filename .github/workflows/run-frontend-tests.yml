@@ -1,0 +1,45 @@
+name: Run front-end tests when a push or pull request is made on the 'main' branch
+
+on:
+    # Trigger the workflow on push for the main branch
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        strategy:
+          matrix:
+            node-version: [16.10.0]
+        
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            # Set up Node 
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: ${{ matrix.node-version }}
+
+            # Build project
+            - name: Install dependencies
+              working-directory: front
+              run: ng build #ou npm ci ??
+
+            # Run tests
+            - name: Run tests
+              working-directory: front
+              run: ng test #ou npm run test:prod ?? 
+
+            # Upload front-end tests results
+            - name: Upload test results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                name: frontend-test-results
+                path: front/coverage/bobapp
