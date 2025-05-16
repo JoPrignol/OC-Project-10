@@ -1,4 +1,4 @@
-name: Run maven tests when a push or pull request is made on the 'main' branch
+name: Run back-end tests
 
 on:
     # Trigger the workflow on push for the main branch
