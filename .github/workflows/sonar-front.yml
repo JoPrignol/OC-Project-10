@@ -1,4 +1,4 @@
-name: Build
+name: Analysing front-end code with SonarQube
 on:
   push:
     branches:
