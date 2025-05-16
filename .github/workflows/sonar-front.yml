@@ -2,7 +2,7 @@ name: Analyse front-end code
 
 on:
   workflow_run:
-    workflows: ["Run back-end tests"]
+    workflows: ["Run front-end tests"]
     types:
       - completed
     
