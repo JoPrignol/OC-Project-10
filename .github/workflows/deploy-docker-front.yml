@@ -2,7 +2,7 @@ name: Deploy front-end code to docker hub
 
 on:
   workflow_run:
-    workflows: ["Run front-end tests", "Analyse front-end code"]
+    workflows: ["Analyse front-end code"]
     types:
       - completed
             
