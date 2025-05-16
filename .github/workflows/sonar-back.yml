@@ -1,4 +1,4 @@
-name: Analysing back-end with SonarQube
+name: Analysing back-end code with SonarQube
 on:
   push:
     branches:
