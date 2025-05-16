@@ -1,5 +1,6 @@
 name: Analyse front-end code
 
+# The workflow is triggered when front-end tests job is completed
 on:
   workflow_run:
     workflows: ["Run front-end tests"]
@@ -7,13 +8,19 @@ on:
       - completed
     
 jobs:
+
   sonarqube:
+  
     name: SonarQube
     runs-on: ubuntu-latest
+    
     steps:
+      # Checkout to code
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      # Code analysis 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
