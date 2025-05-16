@@ -1,12 +1,14 @@
 name: Deploy back-end code to docker hub
 
 on:
-  push:
-    branches:
-            - main
+  workflow_run:
+    workflows: ["Run maven tests when a push or pull request is made on the 'main' branch", "Analysing front-end code with SonarQube"]
+    types:
+      - completed
             
 jobs:
   docker:
+    name: Deploy docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
