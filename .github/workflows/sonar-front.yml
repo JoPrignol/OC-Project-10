@@ -1,10 +1,11 @@
 name: Analyse front-end code
+
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_run:
+    workflows: ["Run back-end tests"]
+    types:
+      - completed
+    
 jobs:
   sonarqube:
     name: SonarQube
