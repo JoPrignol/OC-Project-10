@@ -1,10 +1,11 @@
 name: Analyse back-end code
+
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_run:
+    workflows: ["Run back-end tests"]
+    types:
+      - completed
+    
 jobs:
   build:
     name: Build and analyze
