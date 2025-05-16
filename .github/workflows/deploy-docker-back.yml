@@ -2,7 +2,7 @@ name: Deploy back-end code to docker hub
 
 on:
   workflow_run:
-    workflows: ["Run back-end tests", "Analyse back-end code"]
+    workflows: ["Analyse back-end code"]
     types:
       - completed
             
