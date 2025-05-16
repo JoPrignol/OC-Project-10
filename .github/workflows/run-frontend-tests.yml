@@ -1,4 +1,4 @@
-name: Run back-end tests
+name: Run front-end tests
 
 on:
     # Trigger the workflow on push for the main branch
