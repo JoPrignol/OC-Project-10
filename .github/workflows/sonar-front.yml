@@ -23,6 +23,10 @@ jobs:
       - name: Télécharger tous les artifacts disponibles
         uses: actions/download-artifact@v4
 
+      - name: Vérifier où les artifacts ont été téléchargés
+        run: ls -R ${{ github.workspace }}
+
+
       - name: Vérifier les fichiers téléchargés
         run: ls -R front/coverage/
 
