@@ -26,6 +26,9 @@ jobs:
       - name: Vérifier où les artifacts ont été téléchargés
         run: ls -R ${{ github.workspace }}
 
+      - name: Créer le dossier de coverage si nécessaire
+        run: mkdir -p front/coverage
+
 
       - name: Vérifier les fichiers téléchargés
         run: ls -R front/coverage/
