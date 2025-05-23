@@ -1,13 +1,11 @@
 name: Run back-end tests and Sonar analysis
 
 on:
-    # Trigger the workflow on push for the main branch
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  workflow_run:
+    workflows: ["Test and analyse front-end code"]
+    types:
+      - completed
+      
 jobs:
     build:
         runs-on: ubuntu-latest
