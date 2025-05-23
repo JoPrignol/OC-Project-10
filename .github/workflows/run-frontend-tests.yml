@@ -47,3 +47,4 @@ jobs:
               with:
                 name: frontend-test-results
                 path: front/coverage/bobapp
+                retention-days: 1  # Les artifacts seront conservés 24 heures
