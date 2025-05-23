@@ -20,6 +20,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Télécharger les résultats de coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-test-results
+          path: front/coverage/bobapp
+
+
+      - name: Vérifier l'existence du fichier de coverage
+        run: ls -l front/coverage/bobapp/
+
       # Code analysis 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
