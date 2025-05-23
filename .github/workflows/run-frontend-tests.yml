@@ -48,11 +48,6 @@ jobs:
                 # name: frontend-test-results
                 # path: front/coverage/bobapp
                 name: frontend-test-results
-                path: ${{ github.workspace }}/front/coverage/bobapp
-
+                path: front/coverage
                 retention-days: 1  # Les artifacts seront conservés 24 heures
-
-            # Verify that files were correctly uploaded
-            - name: Vérifier l'état de l'upload
-              run: ls -l ${{ github.workspace }}/front/coverage/bobapp/
 
