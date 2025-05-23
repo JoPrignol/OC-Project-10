@@ -1,4 +1,4 @@
-name: Run back-end tests
+name: Run back-end tests and Sonar analysis
 
 on:
     # Trigger the workflow on push for the main branch
@@ -38,3 +38,24 @@ jobs:
               with:
                 name: jacoco-report
                 path: back/target/site/jacoco
+
+            # Caching
+            - name: Cache SonarQube packages
+              uses: actions/cache@v4
+              with:
+                  path: ~/.sonar/cache
+                  key: ${{ runner.os }}-sonar
+                  restore-keys: ${{ runner.os }}-sonar
+            - name: Cache Maven packages
+              uses: actions/cache@v4
+              with:
+                  path: ~/.m2
+                  key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+                  restore-keys: ${{ runner.os }}-m2
+          
+            # Run code analysis
+            - name: Build and analyze
+              working-directory: back
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
+              run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JoPrignol_OC-Project-10-BACK
