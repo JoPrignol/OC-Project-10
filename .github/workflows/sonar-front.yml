@@ -20,12 +20,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Télécharger tous les artifacts disponibles
+        uses: actions/download-artifact@v4
+
+        - name: Vérifier les fichiers téléchargés
+          run: ls -R front/coverage/
+
       - name: Télécharger les résultats de coverage
         uses: actions/download-artifact@v4
         with:
           name: frontend-test-results
-          path: front/coverage/bobapp
-
+          path: ${{ github.workspace }}/front/coverage/bobapp
 
       - name: Vérifier l'existence du fichier de coverage
         run: ls -l front/coverage/bobapp/
