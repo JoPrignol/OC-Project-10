@@ -1,6 +1,6 @@
 name: Analyse front-end code
 
-# The workflow is triggered when front-end tests job is completed
+# The workflow is triggered when front-end tests job is completed 
 on:
   workflow_run:
     workflows: ["Run front-end tests"]
