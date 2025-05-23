@@ -36,6 +36,10 @@ jobs:
               working-directory: front
               run: npm run test:prod
 
+            # verify that the coverage files exist
+            - name: Vérifier la présence des fichiers avant l'upload
+              run: ls -l front/coverage/bobapp/
+
             # Upload front-end tests results
             - name: Upload test results
               if: always()
