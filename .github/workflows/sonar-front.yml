@@ -20,18 +20,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Télécharger tous les artifacts disponibles
+      #- name: Télécharger tous les artifacts disponibles
+        #uses: actions/download-artifact@v4
+
+      #- name: Vérifier où les artifacts ont été téléchargés
+        #run: ls -R ${{ github.workspace }}
+
+      - name: Télécharger les résultats de coverage dans un dossier temporaire
         uses: actions/download-artifact@v4
+        with:
+          name: frontend-test-results
+          path: downloaded-artifacts
 
-      - name: Vérifier où les artifacts ont été téléchargés
-        run: ls -R ${{ github.workspace }}
+      - name: Vérifier le contenu de l'artifact téléchargé
+        run: ls -R downloaded-artifacts
 
-      - name: Créer le dossier de coverage si nécessaire
-        run: mkdir -p front/coverage
-
-
-      - name: Vérifier les fichiers téléchargés
-        run: ls -R front/coverage/
 
       - name: Télécharger les résultats de coverage
         uses: actions/download-artifact@v4
