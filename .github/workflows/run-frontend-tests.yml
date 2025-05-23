@@ -45,8 +45,11 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v4
               with:
+                # name: frontend-test-results
+                # path: front/coverage/bobapp
                 name: frontend-test-results
-                path: front/coverage/bobapp
+                path: ${{ github.workspace }}/front/coverage/bobapp
+
                 retention-days: 1  # Les artifacts seront conservés 24 heures
 
             # Verify that files were correctly uploaded
