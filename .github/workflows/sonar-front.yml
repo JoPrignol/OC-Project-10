@@ -1,11 +1,13 @@
-name: Analyse front-end code
+name: Test and analyse front-end code
 
-# The workflow is triggered when front-end tests job is completed 
 on:
-  workflow_run:
-    workflows: ["Run front-end tests"]
-    types:
-      - completed
+    # Trigger the workflow on push for the main branch
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
 
@@ -37,7 +39,7 @@ jobs:
         run: npm run test:prod
 
       # verify that the coverage files exist
-      - name: Vérifier la présence des fichiers avant l'upload
+      - name: check for coverage files
         run: ls -l front/coverage/bobapp/
 
       # Upload front-end tests results
@@ -51,13 +53,13 @@ jobs:
           path: front/coverage
           retention-days: 1
 
-      - name: Télécharger les résultats de coverage
+      - name: Download test results
         uses: actions/download-artifact@v4
         with:
           name: frontend-test-results
           path: ${{ github.workspace }}/front/coverage/bobapp
 
-      - name: Vérifier l'existence du fichier de coverage
+      - name: check for coverage files
         run: ls -l front/coverage/bobapp/
 
       # Code analysis 
