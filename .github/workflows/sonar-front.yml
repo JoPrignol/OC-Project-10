@@ -27,3 +27,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: front
+          args: >
+            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
