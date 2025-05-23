@@ -1,5 +1,6 @@
 name: Deploy front-end and back-end code to Docker Hub
 
+# The workflow is triggered by the completion of the backend tests and sonar analysis workflow.
 on:
   workflow_run:
     workflows: ["Run back-end tests and Sonar analysis"]
@@ -11,7 +12,7 @@ jobs:
     name: Deploy frontend and backend images
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
