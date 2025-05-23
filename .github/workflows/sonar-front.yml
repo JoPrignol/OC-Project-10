@@ -6,81 +6,29 @@ on:
     workflows: ["Run front-end tests"]
     types:
       - completed
-    
+
 jobs:
 
   sonarqube:
-  
+
     name: SonarQube
     runs-on: ubuntu-latest
-    
+
     steps:
       # Checkout to code
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Set up Node 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      # Build project
-      - name: Install dependencies
-        working-directory: front
-        run: npm ci
-
-      # Run tests
-      - name: Run tests
-        working-directory: front
-        run: npm run test:prod
-
-      # Upload front-end tests results
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-test-results
-          path: front/coverage/bobapp
-
       # Code analysis 
-      #- name: SonarQube Scan
-        #uses: SonarSource/sonarqube-scan-action@v5
-        #env:
-          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        #with:
-          #projectBaseDir: front
-          #args: >
-            #-Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
-            #-Dsonar.sources=src
-            #-Dsonar.inclusions=src/**/*.ts
-            #-Dsonar.exclusions=**/*.spec.ts,**/test.ts
-
-      - name: Run SonarQube Analysis for Frontend
-        working-directory: front  # Spécifie le chemin du front-end
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Jeton d'accès pour SonarCloud
-        run: |
-          npx sonar-scanner \
-          -Dsonar.projectKey=joprignol_oc-project-10 \
-          -Dsonar.sources=src
-          -Dsonar.projectName=oc-project-10 \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.organization=joprignol \
-          -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
-          -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info  # Chemin vers le rapport de couverture LCOV
-
-      # Étape 10: Lister les fichiers de couverture
-      - name: List coverage files
-        working-directory: front  # Spécifie le chemin du front-end
-        run: ls -l coverage/bobapp  # Liste les fichiers dans le répertoire de couverture
-
-      # Étape 11: Upload des résultats de test frontend
-      - name: Upload frontend test results
-        if: always() 
-        uses: actions/upload-artifact@v4
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          name: frontend-test-results  # Nom de l'artifact
-          path: front/coverage/bobapp  # Chemin des résultats de test
-      
+          projectBaseDir: front
+          args: >
+            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+            -Dsonar.sources=src
+            -Dsonar.inclusions=src/**/*.ts
+            -Dsonar.exclusions=**/*.spec.ts,**/test.ts
