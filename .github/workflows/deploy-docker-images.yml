@@ -3,7 +3,9 @@ name: Deploy front-end and back-end code to Docker Hub
 # Déclenchement quand les workflows d’analyse sont terminés
 on:
   workflow_run:
-    workflows: ["Run back-end tests and Sonar analysis"]
+    workflows: 
+      - "Run back-end tests and Sonar analysis"
+      - "Test and analyse front-end code"
     types:
       - completed
 
