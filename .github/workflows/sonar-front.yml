@@ -20,6 +20,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check lcov file content
+        run: cat front/coverage/bobapp/lcov.info || echo "lcov.info not found"
+
       # Code analysis 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
