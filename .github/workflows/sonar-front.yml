@@ -20,21 +20,36 @@ jobs:
         with:
           fetch-depth: 0
 
-      #- name: Télécharger tous les artifacts disponibles
-        #uses: actions/download-artifact@v4
-
-      #- name: Vérifier où les artifacts ont été téléchargés
-        #run: ls -R ${{ github.workspace }}
-
-      - name: Télécharger les résultats de coverage dans un dossier temporaire
-        uses: actions/download-artifact@v4
+      # Set up Node 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
+          node-version: ${{ matrix.node-version }}
+
+      # Build project
+      - name: Install dependencies
+        working-directory: front
+        run: npm ci
+
+      # Run tests
+      - name: Run tests
+        working-directory: front
+        run: npm run test:prod
+
+      # verify that the coverage files exist
+      - name: Vérifier la présence des fichiers avant l'upload
+        run: ls -l front/coverage/bobapp/
+
+      # Upload front-end tests results
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          # name: frontend-test-results
+          # path: front/coverage/bobapp
           name: frontend-test-results
-          path: downloaded-artifacts
-
-      - name: Vérifier le contenu de l'artifact téléchargé
-        run: ls -R downloaded-artifacts
-
+          path: front/coverage
+          retention-days: 1
 
       - name: Télécharger les résultats de coverage
         uses: actions/download-artifact@v4
