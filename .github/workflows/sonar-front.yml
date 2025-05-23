@@ -44,18 +44,43 @@ jobs:
           name: frontend-test-results
           path: front/coverage/bobapp
 
-      - name: Check lcov file content
-        run: cat front/coverage/bobapp/lcov.info || echo "lcov.info not found"
-
       # Code analysis 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+      #- name: SonarQube Scan
+        #uses: SonarSource/sonarqube-scan-action@v5
+        #env:
+          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        #with:
+          #projectBaseDir: front
+          #args: >
+            #-Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+            #-Dsonar.sources=src
+            #-Dsonar.inclusions=src/**/*.ts
+            #-Dsonar.exclusions=**/*.spec.ts,**/test.ts
+
+      - name: Run SonarQube Analysis for Frontend
+        working-directory: front  # Spécifie le chemin du front-end
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Jeton d'accès pour SonarCloud
+        run: |
+          npx sonar-scanner \
+          -Dsonar.projectKey=joprignol_oc-project-10 \
+          -Dsonar.sources=src
+          -Dsonar.projectName=oc-project-10 \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=joprignol \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info  # Chemin vers le rapport de couverture LCOV
+
+      # Étape 10: Lister les fichiers de couverture
+      - name: List coverage files
+        working-directory: front  # Spécifie le chemin du front-end
+        run: ls -l coverage/bobapp  # Liste les fichiers dans le répertoire de couverture
+
+      # Étape 11: Upload des résultats de test frontend
+      - name: Upload frontend test results
+        if: always() 
+        uses: actions/upload-artifact@v4
         with:
-          projectBaseDir: front
-          args: >
-            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
-            -Dsonar.sources=src
-            -Dsonar.inclusions=src/**/*.ts
-            -Dsonar.exclusions=**/*.spec.ts,**/test.ts
+          name: frontend-test-results  # Nom de l'artifact
+          path: front/coverage/bobapp  # Chemin des résultats de test
+      
