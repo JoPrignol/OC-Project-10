@@ -29,3 +29,6 @@ jobs:
           projectBaseDir: front
           args: >
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+            -Dsonar.sources=src
+            -Dsonar.inclusions=src/**/*.ts
+            -Dsonar.exclusions=**/*.spec.ts,**/test.ts
