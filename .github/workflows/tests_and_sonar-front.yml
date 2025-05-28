@@ -1,4 +1,4 @@
-name: Test and analyse front-end code 
+name: Test and analyse front-end code
 
 on:
     # Trigger the workflow on push for the main branch
